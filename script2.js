@@ -2,13 +2,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const cardsArray = ["1.jpg", "2.jpg", "3.jpg", "8.jpg", "5.jpg", "9.jpg", "1.jpg", "2.jpg", "3.jpg", "8.jpg", "5.jpg", "9.jpg"];
     let shuffledCards = [], selectedCards = [], matchedCards = [], moveCount = 0, timer, timeElapsed = 0;
     let len = cardsArray.length;
-    
 
-    while (len) {
-        let i = Math.floor(Math.random() * len);
-        shuffledCards.push(cardsArray.splice(i, 1)[0]);
-        len--;
+    
+    function shuffleCards() {
+        let tempArray = [...cardsArray];
+        shuffledCards = [];
+
+        while (tempArray.length) {
+            let i = Math.floor(Math.random() * tempArray.length);
+            shuffledCards.push(tempArray.splice(i, 1)[0]);
+        }
     }
+
+    shuffleCards();
 
     const gameBoard = document.getElementById("game-board");
     const movesDisplay = document.getElementById("moves"); 
@@ -16,21 +22,25 @@ document.addEventListener("DOMContentLoaded", () => {
     const gameOverPopup = document.getElementById("game-over"); 
     const restartButton = document.getElementById("restart"); 
 
-  
-    shuffledCards.forEach((card, index) => {
-        let cardElement = document.createElement("div");
-        cardElement.className = "card";
-        cardElement.dataset.symbol = card;
-        cardElement.dataset.index = index;
+    
+    function createBoard() {
+        gameBoard.innerHTML = "";  
 
-        let img = document.createElement("img");
-        img.src = "back.png";
-        img.className = "card-image";
-        cardElement.appendChild(img);
+        shuffledCards.forEach((card, index) => {
+            let cardElement = document.createElement("div");
+            cardElement.className = "card";
+            cardElement.dataset.symbol = card;
+            cardElement.dataset.index = index;
 
-        cardElement.addEventListener("click", flipCard);
-        gameBoard.appendChild(cardElement);
-    });
+            let img = document.createElement("img");
+            img.src = "back.png";
+            img.className = "card-image";
+            cardElement.appendChild(img);
+
+            cardElement.addEventListener("click", flipCard);
+            gameBoard.appendChild(cardElement);
+        });
+    }
 
 
     function startTimer() {
@@ -47,6 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const remainingSeconds = seconds % 60;
         return `${minutes}:${remainingSeconds < 10 ? "0" + remainingSeconds : remainingSeconds}`;
     }
+
 
     function flipCard() {
         if (selectedCards.length < 2 && !this.classList.contains("flipped")) {
@@ -80,7 +91,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         selectedCards = [];
 
- 
         if (matchedCards.length === shuffledCards.length) {
             clearInterval(timer); 
             setTimeout(() => {
@@ -89,8 +99,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    
     function restartGame() {
-        
+     
         shuffledCards = [];
         selectedCards = [];
         matchedCards = [];
@@ -100,33 +111,19 @@ document.addEventListener("DOMContentLoaded", () => {
         timerDisplay.textContent = "0:00";
         gameOverPopup.style.display = "none";
 
+   
+        shuffleCards();
+        createBoard();
+
        
-        while (cardsArray.length) {
-            let i = Math.floor(Math.random() * cardsArray.length);
-            shuffledCards.push(cardsArray.splice(i, 1)[0]);
-        }
-
-        gameBoard.innerHTML = "";
-        shuffledCards.forEach((card, index) => {
-            let cardElement = document.createElement("div");
-            cardElement.className = "card";
-            cardElement.dataset.symbol = card;
-            cardElement.dataset.index = index;
-
-            let img = document.createElement("img");
-            img.src = "back.png";
-            img.className = "card-image";
-            cardElement.appendChild(img);
-
-            cardElement.addEventListener("click", flipCard);
-            gameBoard.appendChild(cardElement);
-        });
-
         clearInterval(timer);
         timer = null;
         timeElapsed = 0;
     }
 
-  
+ 
     restartButton.addEventListener("click", restartGame);
+
+    
+    createBoard();
 });
