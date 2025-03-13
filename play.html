@@ -1,23 +1,29 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="script2.js"></script>
+    <title>Memory Game - Play</title>
     <link rel="stylesheet" href="style.css">
+    <script src="script2.js" defer></script>
+  
+
 </head>
-<body  id="bb">
-    <div id="jj" ><a href="index1.html"> back </a></div>
-    <div >
+<body id="bb">
+    <div id="jj"><a href="index.html">Back</a></div>
+    
+    <div>
         <div id="game-board"></div>
         <div id="game-over" style="display: none;">
-            <h1 id="hhh" >Congratulations! You Win!</h2>
-            <p id="ttt" >Time: <span id="timer">0:00</span></p>
-            <p id="mmm" >Moves: <span id="moves">0</span></p>
+            <h1 id="hhh">Congratulations! You Win!</h1>
+            <p id="ttt">Time: <span id="timer">0:00</span></p>
+            <p id="mmm">Moves: <span id="moves">0</span></p>
             <button id="restart">Restart Game</button>
         </div>
     </div>
-  
-    
+
+    <audio id="bgMusic" loop>
+        <source src="audio.mp3" type="audio/mp3">
+    </audio>
 </body>
 </html>

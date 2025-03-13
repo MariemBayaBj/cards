@@ -68,7 +68,7 @@ a{
 
 }
 #bb { 
-    background-image: url("background.jpg");
+   background-color: antiquewhite;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
